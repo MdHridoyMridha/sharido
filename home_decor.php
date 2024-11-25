@@ -1,10 +1,60 @@
+<?php
+require 'db_connect.php';
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
+
+// Fetch jewelry products
+$sql_products = "SELECT * FROM products WHERE category = 'home decor'";
+$result_products = $conn->query($sql_products);
+
+$products = [];
+if ($result_products->num_rows > 0) {
+    while ($row = $result_products->fetch_assoc()) {
+        $products[] = $row;
+    }
+}
+
+// Add product to cart
+if (isset($_GET['add_to_cart'])) {
+    $product_id = $_GET['add_to_cart'];
+
+    // Check if the product is already in the cart
+    $check_cart_sql = "SELECT * FROM cart WHERE user_id = $user_id AND product_id = $product_id";
+    $check_cart_result = mysqli_query($conn, $check_cart_sql);
+
+    if (mysqli_num_rows($check_cart_result) > 0) {
+        // Product exists in cart, update quantity
+        $update_cart_sql = "UPDATE cart SET quantity = quantity + 1 WHERE user_id = $user_id AND product_id = $product_id";
+        if (!mysqli_query($conn, $update_cart_sql)) {
+            die('Error updating cart: ' . mysqli_error($conn));
+        }
+    } else {
+        // Product does not exist in cart, insert new
+        $insert_cart_sql = "INSERT INTO cart (user_id, product_id, quantity) VALUES ($user_id, $product_id, 1)";
+        if (!mysqli_query($conn, $insert_cart_sql)) {
+            die('Error inserting to cart: ' . mysqli_error($conn));
+        }
+    }
+
+    // Redirect to the same page after adding the product
+    header('Location: home_decor.php');
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Customer Dashboard - SHARIDO</title>
+    <title>Jewelry - SHARIDO</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
@@ -37,6 +87,7 @@
 </head>
 
 <body>
+
     <!-- Navigation Bar -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
@@ -49,6 +100,9 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
                         <a class="nav-link" href="dashboard.php">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.php">Cart</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="profile.php">Profile</a>
@@ -69,7 +123,7 @@
             <!-- Sidebar for Categories -->
             <div class="col-md-3 sidebar">
                 <h5 class="text-center">Categories</h5>
-                <a href="#" onclick="filterCategory('all')">All Products</a>
+                <a href="dashboard.php" onclick="filterCategory('all')">All Products</a>
                 <a href="jewelry.php" onclick="filterCategory('jewelry')">Jewelry</a>
                 <a href="home_decor.php" onclick="filterCategory('home-decor')">Home Decor</a>
                 <a href="clothing.php" onclick="filterCategory('clothing')">Clothing</a>
@@ -88,82 +142,19 @@
 
                 <!-- Product Section -->
                 <div class="row row-cols-1 row-cols-md-3 g-4" id="productContainer">
-                    <!-- Product 1 -->
-                    <div class="col product-card" data-category="Home Decor">
+                    <?php foreach ($products as $product): ?>
+                    <div class="col product-card" data-category="<?php echo $product['category']; ?>">
                         <div class="card">
-                            <img src="images/bu1.jpg" class="card-img-top" alt="Jewelry">
+                            <img src="images/<?php echo $product['image']; ?>" class="card-img-top" alt="<?php echo $product['name']; ?>">
                             <div class="card-body">
-                                <h5 class="card-title">Handmade Bucket</h5>
-                                <p class="card-text">Beautiful handmade bucket for your exersories</p>
-                                <p><strong>2000tk</strong></p>
-                                <button class="btn btn-outline-primary">Add to Cart</button>
+                                <h5 class="card-title"><?php echo $product['name']; ?></h5>
+                                <p class="card-text"><?php echo $product['description']; ?></p>
+                                <p><strong><?php echo $product['price']; ?> tk</strong></p>
+                                <a href="home_decor.php?add_to_cart=<?php echo $product['id']; ?>" class="btn btn-outline-primary">Add to Cart</a>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Product 2 -->
-                    <div class="col product-card" data-category="Home Decor">
-                        <div class="card">
-                            <img src="images/bucket.png" class="card-img-top" alt="Bucket">
-                            <div class="card-body">
-                                <h5 class="card-title">Traditional Bengali Bucket</h5>
-                                <p class="card-text">Beautiful handmade bucket for your plants.</p>
-                                <p><strong>450tk</strong></p>
-                                <button class="btn btn-outline-primary">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 3 -->
-                    <div class="col product-card" data-category="Home Decor">
-                        <div class="card">
-                            <img src="images/bu2.jpg" class="card-img-top" alt="Saree">
-                            <div class="card-body">
-                                <h5 class="card-title">Traditional Bucket</h5>
-                                <p class="card-text">Authentic to embrace your cultural style.</p>
-                                <p><strong>1300tk</strong></p>
-                                <button class="btn btn-outline-primary">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 4 -->
-                    <div class="col product-card" data-category="Home Decor">
-                        <div class="card">
-                            <img src="images/bu3.jpg" class="card-img-top" alt="Mehedi">
-                            <div class="card-body">
-                                <h5 class="card-title">Pure Hanmade bucket</h5>
-                                <p class="card-text">Pure for natural coloring.</p>
-                                <p><strong>120tk</strong></p>
-                                <button class="btn btn-outline-primary">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 5 -->
-                    <div class="col product-card" data-category="Home Decor">
-                        <div class="card">
-                            <img src="images/bu4.jpg" class="card-img-top" alt="Tote Bag">
-                            <div class="card-body">
-                                <h5 class="card-title">Handcrafted Bucket</h5>
-                                <p class="card-text">Stylish Your house with craft.</p>
-                                <p><strong>450tk</strong></p>
-                                <button class="btn btn-outline-primary">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                     <!-- Product 6 -->
-                     <div class="col product-card" data-category="Home Decor">
-                        <div class="card">
-                            <img src="images/hanging.png" class="card-img-top" alt="Tote Bag">
-                            <div class="card-body">
-                                <h5 class="card-title">primium Handmade Wall Hanger</h5>
-                                <p class="card-text">Stylish Your house.</p>
-                                <p><strong>450tk</strong></p>
-                                <button class="btn btn-outline-primary">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
@@ -198,11 +189,17 @@
             });
         }
     </script>
-     <!-- Footer Section -->
-     <footer class="bg-dark text-white text-center py-4">
+
+    <!-- Footer Section -->
+    <footer class="bg-dark text-white text-center py-4">
         <p>&copy; 2024 SHARIDO. All Rights Reserved.</p>
-        <p>Follow us on <a href="*" class="text-white">Facebook</a></p>
+        <p>Follow us on <a href="#" class="text-white">Facebook</a></p>
     </footer>
 </body>
 
 </html>
+
+<?php
+// Close database connection
+$conn->close();
+?>

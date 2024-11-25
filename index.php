@@ -37,6 +37,9 @@
                             <a class="nav-link" href="#products">Products</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="admin_login.php">Admin</a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link" href="#about">About Us</a>
                         </li>
                         <li class="nav-item">
@@ -66,7 +69,7 @@
                 <!-- Product 1 -->
                 <div class="col">
                     <div class="card product-card">
-                        <img src="images/jewelery.png" alt="Product 1" class="card-img-top">
+                        <img src="images/jew1.jpg" alt="Product 1" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Handmade Jewelry</h5>
                             <p class="card-text">Authentic pearl jewelry, perfect for any occasion.</p>
@@ -79,7 +82,7 @@
                 <!-- Product 2 -->
                 <div class="col">
                     <div class="card product-card">
-                        <img src="images/bucket.png" alt="Product 2" class="card-img-top">
+                        <img src="images/bu4.jpg" alt="Product 2" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Traditional Bengali Bucket</h5>
                             <p class="card-text">A beautiful, handmade plant bucket with a traditional touch.</p>
@@ -92,7 +95,7 @@
                 <!-- Product 3 -->
                 <div class="col">
                     <div class="card product-card">
-                        <img src="images/hanging.png" alt="Product 3" class="card-img-top">
+                        <img src="images/hang1.jpg" alt="Product 3" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Handmade Wall Hangings</h5>
                             <p class="card-text">Add a cultural touch to your home with these wall decorations.</p>
@@ -105,7 +108,7 @@
                 <!-- Product 4 -->
                 <div class="col">
                     <div class="card product-card">
-                        <img src="images/shari.png" alt="Product 4" class="card-img-top">
+                        <img src="images/share1.webp" alt="Product 4" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Treditional Shari</h5>
                             <p class="card-text">Add a cultural touch in your daily life.</p>
@@ -118,7 +121,7 @@
                 <!-- Product 5 -->
                 <div class="col">
                     <div class="card product-card">
-                        <img src="images/mehedi.png" alt="Product 5" class="card-img-top">
+                        <img src="images/mehedi1.png" alt="Product 5" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Pure Organic Mehedi</h5>
                             <p class="card-text">Use organic mehedi to get real color.</p>
@@ -131,7 +134,7 @@
                 <!-- Product 6 -->
                 <div class="col">
                     <div class="card product-card">
-                        <img src="images/tote.webp" alt="Product 6" class="card-img-top">
+                        <img src="images/tote2.jpg" alt="Product 6" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Tote Bag </h5>
                             <p class="card-text">Make your daily life productive.</p>
@@ -149,31 +152,31 @@
                             <h5 class="card-title">Pure cotton Tote bag</h5>
                             <p class="card-text">Stylish tote bag for your daily needs</p>
                             <p><strong>120tk</strong></p>
-                            <button class="btn btn-outline-primary">Add to Cart</button>
+                            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#signModal">Add to Cart</button>
                         </div>
                     </div>
                 </div>
                   <!-- Product 8 -->
                   <div class="col product-card" data-category="jewelry">
                     <div class="card">
-                        <img src="images/jew1.jpg" class="card-img-top" alt="jewelry">
+                        <img src="images/jew2.jpg" class="card-img-top" alt="jewelry">
                         <div class="card-body">
                             <h5 class="card-title">Elegent pearl Neclace</h5>
                             <p class="card-text">Elegant pearl jewelry perfect for every occasion.</p>
                             <p><strong>890tk</strong></p>
-                            <button class="btn btn-outline-primary">Add to Cart</button>
+                            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#signModal">Add to Cart</button>
                         </div>
                     </div>
                 </div>
-                 <!-- Product 6 -->
+                 <!-- Product 9 -->
                  <div class="col product-card" data-category="Home Decor">
                     <div class="card">
-                        <img src="images/hanging.png" class="card-img-top" alt="Home_Decor">
+                        <img src="images/bu3.jpg" class="card-img-top" alt="Home_Decor">
                         <div class="card-body">
-                            <h5 class="card-title">primium Handmade Wall Hanger</h5>
+                            <h5 class="card-title">primium Handmade Bucket</h5>
                             <p class="card-text">Stylish Your house.</p>
                             <p><strong>450tk</strong></p>
-                            <button class="btn btn-outline-primary">Add to Cart</button>
+                            <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#signModal">Add to Cart</button>
                         </div>
                     </div>
                 </div>
@@ -196,7 +199,7 @@
         </div>
     </section>
 
-    <!-- Contact Section -->
+   
     <!-- Contact Section -->
 <section id="contact" class="py-5">
     <div class="container">
@@ -228,7 +231,7 @@
                     <h5 class="modal-title" id="signModalLabel">Sign In or Sign Up</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
+               <div class="modal-body">
                     <ul class="nav nav-tabs" id="signTabs" role="tablist">
                         <li class="nav-item" role="presentation">
                             <a class="nav-link active" id="sign-in-tab" data-bs-toggle="tab" href="#sign-in" role="tab" aria-controls="sign-in" aria-selected="true">Sign In</a>
@@ -236,8 +239,8 @@
                         <li class="nav-item" role="presentation">
                             <a class="nav-link" id="sign-up-tab" data-bs-toggle="tab" href="#sign-up" role="tab" aria-controls="sign-up" aria-selected="false">Sign Up</a>
                         </li>
-                    </ul>
-                    <div class="tab-content" id="signTabsContent">
+                     </ul>
+               <div class="tab-content" id="signTabsContent">
                        
                         <!-- Sign In Form -->
 <div class="tab-pane fade show active" id="sign-in" role="tabpanel" aria-labelledby="sign-in-tab">

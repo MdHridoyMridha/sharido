@@ -1,5 +1,13 @@
 <?php
 require 'db_connect.php'; // Include your database connection file
+session_start(); // Start session to manage cart
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
+$user_id = $_SESSION['user_id'];
 
 // Fetch product data from the database
 $sql_products = "SELECT * FROM products";
@@ -11,8 +19,28 @@ if ($result_products->num_rows > 0) {
         $products[] = $row;
     }
 }
-?>
 
+// Add product to cart
+if (isset($_GET['add_to_cart'])) {
+    $product_id = $_GET['add_to_cart'];
+
+    // Check if the product is already in the cart
+    $check_cart_sql = "SELECT * FROM cart WHERE user_id = $user_id AND product_id = $product_id";
+    $check_cart_result = mysqli_query($conn, $check_cart_sql);
+
+    if (mysqli_num_rows($check_cart_result) > 0) {
+        $update_cart_sql = "UPDATE cart SET quantity = quantity + 1 WHERE user_id = $user_id AND product_id = $product_id";
+        mysqli_query($conn, $update_cart_sql);
+    } else {
+        $insert_cart_sql = "INSERT INTO cart (user_id, product_id, quantity) VALUES ($user_id, $product_id, 1)";
+        mysqli_query($conn, $insert_cart_sql);
+    }
+
+    // Redirect to the same page after adding the product
+    header('Location: dashboard.php');
+    exit();
+}
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -65,7 +93,10 @@ if ($result_products->num_rows > 0) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href='dashboard.php'>Dashboard</a>
+                        <a class="nav-link" href="dashboard.php">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.php">Cart</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="profile.php">Profile</a>
@@ -86,12 +117,12 @@ if ($result_products->num_rows > 0) {
             <!-- Sidebar for Categories -->
             <div class="col-md-3 sidebar">
                 <h5 class="text-center">Categories</h5>
-                <a href="#" onclick="filterCategory('all')">All Products</a>
+                <a href="dashboard.php" onclick="filterCategory('all')">All Products</a>
                 <a href="jewelry.php" onclick="filterCategory('jewelry')">Jewelry</a>
-                <a href='home_decor.php' onclick="filterCategory('home-decor')">Home Decor</a>
-                <a href='clothing.php' onclick="filterCategory('clothing')">Clothing</a>
-                <a href='organic.php' onclick="filterCategory('organic')">Organic Products</a>
-                <a href='bag.php' onclick="filterCategory('bags')">Tote Bags</a>
+                <a href="home_decor.php" onclick="filterCategory('home-decor')">Home Decor</a>
+                <a href="clothing.php" onclick="filterCategory('clothing')">Clothing</a>
+                <a href="organic.php" onclick="filterCategory('organic')">Organic Products</a>
+                <a href="bag.php" onclick="filterCategory('bags')">Tote Bags</a>
             </div>
 
             <!-- Main Content Area -->
@@ -105,87 +136,25 @@ if ($result_products->num_rows > 0) {
 
                 <!-- Product Section -->
                 <div class="row row-cols-1 row-cols-md-3 g-4" id="productContainer">
-                    <!-- Product 1 -->
-                    <div class="col product-card" data-category="jewelry">
+                    <?php foreach ($products as $product): ?>
+                    <div class="col product-card" data-category="<?php echo $product['category']; ?>">
                         <div class="card">
-                            <img src="images/jewelery.png" class="card-img-top" alt="Jewelry">
+                            <img src="images/<?php echo $product['image']; ?>" class="card-img-top" alt="<?php echo $product['name']; ?>">
                             <div class="card-body">
-                                <h5 class="card-title">Handmade Jewelry</h5>
-                                <p class="card-text">Elegant pearl jewelry perfect for every occasion.</p>
-                                <p><strong>2000tk</strong></p>
-                                <button class="btn btn-outline-primary">Add to Cart</button>
+                                <h5 class="card-title"><?php echo $product['name']; ?></h5>
+                                <p class="card-text"><?php echo $product['description']; ?></p>
+                                <p><strong><?php echo $product['price']; ?> tk</strong></p>
+                                <a href="dashboard.php?add_to_cart=<?php echo $product['id']; ?>" class="btn btn-outline-primary">Add to Cart</a>
                             </div>
                         </div>
                     </div>
-
-                    <!-- Product 2 -->
-                    <div class="col product-card" data-category="home-decor">
-                        <div class="card">
-                            <img src="images/jew1.png" class="card-img-top" alt="Bucket">
-                            <div class="card-body">
-                                <h5 class="card-title">Traditional Bengali Bucket</h5>
-                                <p class="card-text">Beautiful handmade bucket for your plants.</p>
-                                <p><strong>450tk</strong></p>
-                                <button class="btn btn-outline-primary">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 3 -->
-                    <div class="col product-card" data-category="clothing">
-                        <div class="card">
-                            <img src="images/shari.png" class="card-img-top" alt="Saree">
-                            <div class="card-body">
-                                <h5 class="card-title">Traditional Saree</h5>
-                                <p class="card-text">Authentic saree to embrace your cultural style.</p>
-                                <p><strong>1300tk</strong></p>
-                                <button class="btn btn-outline-primary">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 4 -->
-                    <div class="col product-card" data-category="organic">
-                        <div class="card">
-                            <img src="images/mehedi.png" class="card-img-top" alt="Mehedi">
-                            <div class="card-body">
-                                <h5 class="card-title">Pure Organic Mehedi</h5>
-                                <p class="card-text">Organic Mehedi for natural coloring.</p>
-                                <p><strong>120tk</strong></p>
-                                <button class="btn btn-outline-primary">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Product 5 -->
-                    <div class="col product-card" data-category="bags">
-                        <div class="card">
-                            <img src="images/tote.webp" class="card-img-top" alt="Tote Bag">
-                            <div class="card-body">
-                                <h5 class="card-title">Handcrafted Tote Bag</h5>
-                                <p class="card-text">Stylish tote bag for your daily needs.</p>
-                                <p><strong>450tk</strong></p>
-                                <button class="btn btn-outline-primary">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
-                     <!-- Product 6 -->
-                     <div class="col product-card" data-category="bags">
-                        <div class="card">
-                            <img src="images/tote.webp" class="card-img-top" alt="Tote Bag">
-                            <div class="card-body">
-                                <h5 class="card-title">primium Tote Bag</h5>
-                                <p class="card-text">Stylish tote bag for your daily needs.</p>
-                                <p><strong>450tk</strong></p>
-                                <button class="btn btn-outline-primary">Add to Cart</button>
-                            </div>
-                        </div>
-                    </div>
+                    <?php endforeach; ?>
                 </div>
             </div>
         </div>
     </div>
 
+    
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -215,10 +184,11 @@ if ($result_products->num_rows > 0) {
             });
         }
     </script>
-     <!-- Footer Section -->
-     <footer class="bg-dark text-white text-center py-4">
+
+    <!-- Footer Section -->
+    <footer class="bg-dark text-white text-center py-4">
         <p>&copy; 2024 SHARIDO. All Rights Reserved.</p>
-        <p>Follow us on <a href="*" class="text-white">Facebook</a></p>
+        <p>Follow us on <a href="#" class="text-white">Facebook</a></p>
     </footer>
 </body>
 
