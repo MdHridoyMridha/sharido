@@ -11,6 +11,25 @@ require 'db_connect.php';
 $products = $conn->query("SELECT * FROM products");
 $orders = $conn->query("SELECT * FROM orders");
 $messages = $conn->query("SELECT * FROM messages");
+
+// Update order status
+if (isset($_POST['update_status'])) {
+    $order_id = intval($_POST['order_id']);
+    $new_status = $_POST['status'];
+    $update_status_sql = "UPDATE orders SET status = '$new_status' WHERE id = $order_id";
+    $conn->query($update_status_sql);
+    header("Location: admin_dashboard.php");
+    exit();
+}
+
+// Remove an order
+if (isset($_POST['remove_order'])) {
+    $order_id = intval($_POST['order_id']);
+    $remove_order_sql = "DELETE FROM orders WHERE id = $order_id";
+    $conn->query($remove_order_sql);
+    header("Location: admin_dashboard.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -81,72 +100,53 @@ $messages = $conn->query("SELECT * FROM messages");
 
         <!-- Orders Section -->
         <h3 class="mt-5">Orders</h3>
-<table class="table table-bordered table-striped">
-    <thead class="table-dark">
-        <tr>
-            <th>Order ID</th>
-            <th>Name</th>
-            <th>Phone</th>
-            <th>Shipping Address</th>
-            <th>Product Name</th>
-            <th>Quantity</th>
-            <th>Total Price</th>
-            <th>Order Date</th>
-            <th>Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php
-        // Fetch orders for the logged-in user
-        $user_id = $_SESSION['user_id'];
-        $sql_orders = "
-            SELECT 
-                o.id AS order_id, 
-                o.name, 
-                o.phone, 
-                o.shipping_address, 
-                p.name AS product_name, 
-                o.quantity, 
-                o.total_price, 
-                o.order_date, 
-                o.status 
-            FROM 
-                orders o 
-            JOIN 
-                products p 
-            ON 
-                o.product_id = p.id 
-            WHERE 
-                o.user_id = $user_id 
-            ORDER BY 
-                o.order_date DESC";
-        $orders = $conn->query($sql_orders);
-
-        if ($orders && $orders->num_rows > 0):
-            while ($row = $orders->fetch_assoc()):
-        ?>
-        <tr>
-            <td><?= $row['order_id']; ?></td>
-            <td><?= htmlspecialchars($row['name']); ?></td>
-            <td><?= htmlspecialchars($row['phone']); ?></td>
-            <td><?= htmlspecialchars($row['shipping_address']); ?></td>
-            <td><?= htmlspecialchars($row['product_name']); ?></td>
-            <td><?= $row['quantity']; ?></td>
-            <td><?= number_format($row['total_price'], 2); ?> tk</td>
-            <td><?= date('d-m-Y H:i:s', strtotime($row['order_date'])); ?></td>
-            <td><?= ucfirst($row['status']); ?></td>
-        </tr>
-        <?php 
-            endwhile;
-        else:
-        ?>
-        <tr>
-            <td colspan="9" class="text-center">No orders found</td>
-        </tr>
-        <?php endif; ?>
-    </tbody>
-</table>
-
+        <table class="table table-bordered table-striped">
+            <thead class="table-dark">
+                <tr>
+                    <th>Order ID</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Shipping Address</th>
+                    <th>Product Name</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Order Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php while ($row = $orders->fetch_assoc()): ?>
+                <tr>
+                    <td><?= $row['id']; ?></td>
+                    <td><?= htmlspecialchars($row['name']); ?></td>
+                    <td><?= htmlspecialchars($row['phone']); ?></td>
+                    <td><?= htmlspecialchars($row['shipping_address']); ?></td>
+                    <td><?= htmlspecialchars($row['product_id']); // Adjust to show the product name if needed ?></td>
+                    <td><?= $row['quantity']; ?></td>
+                    <td><?= number_format($row['total_price'], 2); ?> tk</td>
+                    <td><?= date('d-m-Y H:i:s', strtotime($row['order_date'])); ?></td>
+                    <td>
+                        <form method="post" style="display:inline;">
+                            <input type="hidden" name="order_id" value="<?= $row['id']; ?>">
+                            <select name="status" class="form-select form-select-sm" style="width: auto; display: inline-block;" onchange="this.form.submit()">
+                                <option value="pending" <?= $row['status'] === 'pending' ? 'selected' : ''; ?>>Pending</option>
+                                <option value="completed" <?= $row['status'] === 'completed' ? 'selected' : ''; ?>>Completed</option>
+                                <option value="cancelled" <?= $row['status'] === 'cancelled' ? 'selected' : ''; ?>>Cancelled</option>
+                            </select>
+                            <input type="hidden" name="update_status">
+                        </form>
+                    </td>
+                    <td>
+                        <form method="post" onsubmit="return confirm('Are you sure you want to remove this order?');" style="display:inline;">
+                            <input type="hidden" name="order_id" value="<?= $row['id']; ?>">
+                            <button type="submit" name="remove_order" class="btn btn-danger btn-sm">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+                <?php endwhile; ?>
+            </tbody>
+        </table>
 
         <!-- Messages Section -->
         <h3 class="mt-5">Messages</h3>

@@ -110,7 +110,7 @@
                     <div class="card product-card">
                         <img src="images/share1.webp" alt="Product 4" class="card-img-top">
                         <div class="card-body">
-                            <h5 class="card-title">Treditional Shari</h5>
+                            <h5 class="card-title">Traditional Sharee</h5>
                             <p class="card-text">Add a cultural touch in your daily life.</p>
                             <p><strong>1300tk</strong></p>
                             <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#signModal">Add to Cart</button>
@@ -161,7 +161,7 @@
                     <div class="card">
                         <img src="images/jew2.jpg" class="card-img-top" alt="jewelry">
                         <div class="card-body">
-                            <h5 class="card-title">Elegent pearl Neclace</h5>
+                            <h5 class="card-title">Elegent pearl Necklace</h5>
                             <p class="card-text">Elegant pearl jewelry perfect for every occasion.</p>
                             <p><strong>890tk</strong></p>
                             <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#signModal">Add to Cart</button>

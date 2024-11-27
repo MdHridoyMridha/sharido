@@ -144,7 +144,7 @@ if (isset($_GET['add_to_cart'])) {
                                 <h5 class="card-title"><?php echo $product['name']; ?></h5>
                                 <p class="card-text"><?php echo $product['description']; ?></p>
                                 <p><strong><?php echo $product['price']; ?> tk</strong></p>
-                                <a href="dashboard.php?add_to_cart=<?php echo $product['id']; ?>" class="btn btn-outline-primary">Add to Cart</a>
+                                <a href="dashboard.php?add_to_cart=<?php echo $product['id']; ?>" class="btn btn-outline-primary" onclick="showPopup()">Add to Cart</a>
                             </div>
                         </div>
                     </div>
@@ -155,6 +155,14 @@ if (isset($_GET['add_to_cart'])) {
     </div>
 
     
+    <!--popup-->
+    <script>
+function showPopup() {
+    alert("Product added to cart successfully!");
+}
+</script>
+    
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 

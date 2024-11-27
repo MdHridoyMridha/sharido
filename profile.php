@@ -53,9 +53,10 @@ if ($result->num_rows > 0) {
 
 <body>
     <!-- Header -->
-    <header class="navbar navbar-expand-lg navbar-dark bg-dark">
+     <!-- Navigation Bar -->
+     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container">
-            <a href="dashboard.php" class="navbar-brand">SHARIDO</a>
+            <a class="navbar-brand" href="dashboard.php">SHARIDO</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -63,13 +64,16 @@ if ($result->num_rows > 0) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a href="dashboard.php" class="nav-link">Home</a>
+                        <a class="nav-link" href="dashboard.php">Dashboard</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="cart.php">Cart</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="profile.php">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a href="orders.php" class="nav-link">My Orders</a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="profile.php" class="nav-link active">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a href="index.php" class="btn btn-danger ms-3">Logout</a>
@@ -77,7 +81,10 @@ if ($result->num_rows > 0) {
                 </ul>
             </div>
         </div>
-    </header>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
 
     <!-- Profile Section -->
     <div class="container my-5">
@@ -153,7 +160,7 @@ if ($result->num_rows > 0) {
         </div>
     </footer>
 
-    <!-- Bootstrap JS Bundle (with Popper) -->
+    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
