@@ -9,7 +9,24 @@ require 'db_connect.php';
 
 // Fetch data from the database
 $products = $conn->query("SELECT * FROM products");
-$orders = $conn->query("SELECT * FROM orders");
+
+// Updated query for orders with JOINs
+$orders = $conn->query("
+    SELECT 
+        orders.id, 
+        users.name AS user_name, 
+        orders.phone, 
+        orders.shipping_address, 
+        products.name AS product_name, 
+        orders.quantity, 
+        orders.total_price, 
+        orders.order_date, 
+        orders.status
+    FROM orders
+    LEFT JOIN users ON orders.user_id = users.id
+    LEFT JOIN products ON orders.product_id = products.id
+");
+
 $messages = $conn->query("SELECT * FROM messages");
 
 // Update order status
@@ -119,10 +136,10 @@ if (isset($_POST['remove_order'])) {
                 <?php while ($row = $orders->fetch_assoc()): ?>
                 <tr>
                     <td><?= $row['id']; ?></td>
-                    <td><?= htmlspecialchars($row['name']); ?></td>
+                    <td><?= htmlspecialchars($row['user_name']); ?></td>
                     <td><?= htmlspecialchars($row['phone']); ?></td>
                     <td><?= htmlspecialchars($row['shipping_address']); ?></td>
-                    <td><?= htmlspecialchars($row['product_id']); // Adjust to show the product name if needed ?></td>
+                    <td><?= htmlspecialchars($row['product_name']); ?></td>
                     <td><?= $row['quantity']; ?></td>
                     <td><?= number_format($row['total_price'], 2); ?> tk</td>
                     <td><?= date('d-m-Y H:i:s', strtotime($row['order_date'])); ?></td>
@@ -178,6 +195,7 @@ if (isset($_POST['remove_order'])) {
     <footer class="bg-dark text-white text-center py-3 mt-5">
         <p class="mb-0">© 2024 Admin Dashboard. All Rights Reserved.</p>
     </footer>
+    
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
