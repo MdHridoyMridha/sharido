@@ -74,7 +74,7 @@ if (isset($_GET['add_to_cart'])) {
         }
 
         .card img {
-            height: 200px;
+            height: 300px;
             object-fit: cover;
         }
     </style>
@@ -93,7 +93,7 @@ if (isset($_GET['add_to_cart'])) {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="dashboard.php">Dashboard</a>
+                        <a class="nav-link" href="dashboard.php"><span class="badge text-bg-secondary-subtle">Dashboard</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="cart.php">Cart</a>
@@ -112,27 +112,36 @@ if (isset($_GET['add_to_cart'])) {
         </div>
     </nav>
 
+    
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar for Categories -->
+
+          
             <div class="col-md-3 sidebar">
                 <h5 class="text-center">Categories</h5>
-                <a href="dashboard.php" onclick="filterCategory('all')">All Products</a>
+                <a href="dashboard.php" onclick="filterCategory('all')"><div class="p-3 mb-2 bg-secondary text-white">All Products</div></a>
                 <a href="jewelry.php" onclick="filterCategory('jewelry')">Jewelry</a>
                 <a href="home_decor.php" onclick="filterCategory('home-decor')">Home Decor</a>
                 <a href="clothing.php" onclick="filterCategory('clothing')">Clothing</a>
                 <a href="organic.php" onclick="filterCategory('organic')">Organic Products</a>
                 <a href="bag.php" onclick="filterCategory('bags')">Tote Bags</a>
             </div>
+           
 
             <!-- Main Content Area -->
             <div class="col-md-9">
+
+            
                 <!-- Search Bar -->
+            
                 <div class="input-group my-4">
                     <input type="text" class="form-control" placeholder="Search for products..." id="searchInput"
-                        onkeyup="searchProduct()">
+                        onkeyup="searchProduct()"> 
                     <button class="btn btn-outline-secondary" type="button">Search</button>
                 </div>
+          
+    
 
                 <!-- Product Section -->
                 <div class="row row-cols-1 row-cols-md-3 g-4" id="productContainer">
@@ -154,7 +163,7 @@ if (isset($_GET['add_to_cart'])) {
         </div>
     </div>
 
-    
+
     <!--popup-->
     <script>
 function showPopup() {
@@ -197,7 +206,12 @@ function showPopup() {
     <footer class="bg-dark text-white text-center py-4">
         <p>&copy; 2024 SHARIDO. All Rights Reserved.</p>
         <p>Follow us on <a href="#" class="text-white">Facebook</a></p>
+        
     </footer>
+
+ 
+     
+
 </body>
 
 </html>

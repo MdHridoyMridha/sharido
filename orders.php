@@ -13,7 +13,10 @@ if ($conn->connect_error) {
 }
 
 // Fetch orders from the database
-$sql = "SELECT orders.id, users.name AS customer_name, users.phone AS customer_phone, users.address, products.name AS product_name, orders.quantity, orders.total_price, orders.order_date, orders.status FROM orders INNER JOIN users ON orders.user_id = users.id INNER JOIN products ON orders.product_id = products.id;";
+$sql = "SELECT orders.id,users.id As user_id, users.name AS customer_name, users.phone AS 
+customer_phone, users.address, products.name AS product_name, orders.quantity, 
+orders.total_price, orders.order_date, orders.status FROM orders INNER JOIN users ON orders.user_id = users.id 
+INNER JOIN products ON orders.product_id = products.id where users.id = orders.user_id ;";
 
 $result = $conn->query($sql);
 
@@ -33,32 +36,7 @@ $result = $conn->query($sql);
     <title>Customer Dashboard - SHARIDO</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        body {
-            background-color: #f8f9fa;
-        }
-
-        .sidebar {
-            height: 100vh;
-            background-color: #343a40;
-            color: #fff;
-            padding-top: 20px;
-        }
-
-        .sidebar a {
-            color: #fff;
-            text-decoration: none;
-            padding: 10px 15px;
-            display: block;
-        }
-
-        .sidebar a:hover {
-            background-color: #495057;
-        }
-
-        .card img {
-            height: 200px;
-            object-fit: cover;
-        }
+      
     </style>
 </head>
 
@@ -84,7 +62,7 @@ $result = $conn->query($sql);
                         <a class="nav-link" href="profile.php">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a href="orders.php" class="nav-link">My Orders</a>
+                        <a href="orders.php" class="nav-link"><span class="badge text-bg-secondary-subtle">My Orders</span></a>
                     </li>
                     <li class="nav-item">
                         <a href="index.php" class="btn btn-danger ms-3">Logout</a>

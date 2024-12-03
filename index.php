@@ -61,6 +61,8 @@
         </div>
     </section>
 
+
+ <div class="p-3 mb-2 bg-light text-dark">
     <!-- Products Section -->
     <section id="products" class="py-5">
         <div class="container">
@@ -121,7 +123,7 @@
                 <!-- Product 5 -->
                 <div class="col">
                     <div class="card product-card">
-                        <img src="images/mehedi1.png" alt="Product 5" class="card-img-top">
+                        <img src="images/mehedi2.jpg" alt="Product 5" class="card-img-top">
                         <div class="card-body">
                             <h5 class="card-title">Pure Organic Mehedi</h5>
                             <p class="card-text">Use organic mehedi to get real color.</p>
@@ -185,43 +187,47 @@
             
         </div>
     </section>
-
+</div>
 
     <!-- About Us Section -->
-    
+ 
     <section id="about" class="bg-light py-5">
+    <div class="p-3 mb-2 bg-info-subtle text-info-emphasis">
         <div class="container">
-            <h2 class="text-center mb-4">About SHARIDO</h2>
+            <h2 class="text-center mb-4"><b>About SHARIDO</b></h2>
             <p>✨ Welcome to SHARIDO ✨
                 Crafted with Heart, Inspired by Tradition 🌿
                 
                 At SHARIDO, we bring you exquisite handcrafted treasures that blend the timeless beauty of Bengali tradition with a touch of modern elegance. From pearl jewelry to handmade buckets, tote bags, and wall hangings, each piece is designed to elevate your lifestyle with authenticity and charm. 💫</p>
         </div>
+    </div>
     </section>
 
    
     <!-- Contact Section -->
+
+    <div class="p-3 mb-2 bg-body-tertiary">
 <section id="contact" class="py-5">
     <div class="container">
-        <h2 class="text-center mb-4">Contact Us</h2>
+        <h1 class="text-center mb-4">Contact Us</h1>
         <form action="contact_process.php" method="POST">
             <div class="mb-3">
-                <label for="name" class="form-label">Your Name</label>
+                <label for="name" class="form-label"><b>Your Name</b></label>
                 <input type="text" class="form-control" id="name" name="name" required>
             </div>
             <div class="mb-3">
-                <label for="email" class="form-label">Your Email</label>
+                <label for="email" class="form-label"><b>Your Email</b></label>
                 <input type="email" class="form-control" id="email" name="email" required>
             </div>
             <div class="mb-3">
-                <label for="message" class="form-label">Your Message</label>
+                <label for="message" class="form-label"><b>Your Message</b></label>
                 <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
             </div>
-            <button type="submit" class="btn btn-primary">Send Message</button>
+            <button type="submit" class="btn btn-primary"><b>Send Message</b></button>
         </form>
     </div>
 </section>
-
+</div>
 
     <!-- Sign-In / Sign-Up Modal -->
     <div class="modal fade" id="signModal" tabindex="-1" aria-labelledby="signModalLabel" aria-hidden="true">
@@ -241,7 +247,7 @@
                         </li>
                      </ul>
                <div class="tab-content" id="signTabsContent">
-                       
+                  
                         <!-- Sign In Form -->
 <div class="tab-pane fade show active" id="sign-in" role="tabpanel" aria-labelledby="sign-in-tab">
     <form method="POST" action="signin.php">
@@ -277,12 +283,12 @@
                                  </form>
               
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+                                    </div>
+                                </div>
+                         </div>
+                 </div>
+             </div>
+       </div>
 
     
 
@@ -291,6 +297,9 @@
         <p>&copy; 2024 SHARIDO. All Rights Reserved.</p>
         <p>Follow us on <a href="*" class="text-white">Facebook</a></p>
     </footer>
+
+
+    
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

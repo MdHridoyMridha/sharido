@@ -70,7 +70,7 @@ if ($result->num_rows > 0) {
                         <a class="nav-link" href="cart.php">Cart</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="profile.php">Profile</a>
+                        <a class="nav-link" href="profile.php"><span class="badge text-bg-secondary-subtle">Profile</span></a>
                     </li>
                     <li class="nav-item">
                         <a href="orders.php" class="nav-link">My Orders</a>

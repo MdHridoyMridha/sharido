@@ -80,7 +80,7 @@ if (isset($_GET['add_to_cart'])) {
         }
 
         .card img {
-            height: 200px;
+            height: 300px;
             object-fit: cover;
         }
     </style>
@@ -124,7 +124,7 @@ if (isset($_GET['add_to_cart'])) {
             <div class="col-md-3 sidebar">
                 <h5 class="text-center">Categories</h5>
                 <a href="dashboard.php" onclick="filterCategory('all')">All Products</a>
-                <a href="jewelry.php" onclick="filterCategory('jewelry')">Jewelry</a>
+                <a href="jewelry.php" onclick="filterCategory('jewelry')"><div class="p-3 mb-2 bg-secondary text-white">Jewelry</div></a>
                 <a href="home_decor.php" onclick="filterCategory('home-decor')">Home Decor</a>
                 <a href="clothing.php" onclick="filterCategory('clothing')">Clothing</a>
                 <a href="organic.php" onclick="filterCategory('organic')">Organic Products</a>
@@ -150,7 +150,7 @@ if (isset($_GET['add_to_cart'])) {
                                 <h5 class="card-title"><?php echo $product['name']; ?></h5>
                                 <p class="card-text"><?php echo $product['description']; ?></p>
                                 <p><strong><?php echo $product['price']; ?> tk</strong></p>
-                                <a href="jewelry.php?add_to_cart=<?php echo $product['id']; ?>" class="btn btn-outline-primary">Add to Cart</a>
+                                <a href="jewelry.php?add_to_cart=<?php echo $product['id']; ?>" class="btn btn-outline-primary"onclick="showPopup()">Add to Cart</a>
                             </div>
                         </div>
                     </div>
@@ -189,6 +189,14 @@ if (isset($_GET['add_to_cart'])) {
             });
         }
     </script>
+
+        <!--popup-->
+        <script>
+function showPopup() {
+    alert("Product added to cart successfully!");
+}
+</script>
+    
 
     <!-- Footer Section -->
     <footer class="bg-dark text-white text-center py-4">

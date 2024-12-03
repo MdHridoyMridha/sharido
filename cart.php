@@ -87,7 +87,7 @@ if (isset($_POST['place_order'])) {
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item"><a class="nav-link" href="dashboard.php">Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link" href="cart.php">Cart</a></li>
+                <li class="nav-item"><a class="nav-link" href="cart.php"><span class="badge text-bg-secondary-subtle">Cart</span></a></li>
                 <li class="nav-item"><a class="nav-link" href="profile.php">Profile</a></li>
                 <li class="nav-item"><a class="nav-link" href="orders.php">My Orders</a></li>
                 <li class="nav-item"><a href="logout.php" class="btn btn-danger ms-3">Logout</a></li>
@@ -134,12 +134,19 @@ if (isset($_POST['place_order'])) {
         </table>
         <h4>Total: <?php echo $total_price; ?> tk</h4>
         <form method="post" action="cart.php">
-            <button type="submit" name="place_order" class="btn btn-success">Place Order</button>
+            <button type="submit" name="place_order" class="btn btn-success"onclick="showPopup()">Place Order</button>
         </form>
     <?php else: ?>
         <p>Your cart is empty!</p>
     <?php endif; ?>
 </div>
+
+<!--popup-->
+<script>
+function showPopup() {
+    alert("Order Placed successfully!");
+}
+</script>
 
 </body>
 </html>
