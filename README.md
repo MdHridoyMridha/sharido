@@ -1,1 +1,1 @@
-# Web
+This is an E Commerce website . It is a project for CSE311 database management course, here i used php,bootstrap,css,html,javascript,sql.This is just a random project about e commerce site where we can create, update ,add ,delete all can use and from this we can understand of all method using of sql and how to connect database with php.
